@@ -1,0 +1,578 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>test</groupId>
+  <artifactId>test</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+    <repositories>
+        <repository>
+            <id>dev.change-vision.com-nexus</id>
+            <name>dev.change-vision.com Maven Repository</name>
+            <url>https://repos.change-vision.com/nexus/content/repositories/public</url>
+        </repository>
+    </repositories>
+    <dependencies>
+    <!-- 【注意】 下記はテストやeclipse上でのコンパイルに使用されるライブラリです。
+          ここだけ変更しても同梱されません。詳しくはlib/README.mdを見てください。 -->
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <!-- JAF 1.0.2 collaborlation AXIS（DataHandler）
+                Specification-Title: JavaBeans(TM) Activation Framework Specification
+                Specification-Version: 1.0
+                Implementation-Version: 1.0.2
+                Extension-Name: javax.activation -->
+            <artifactId>activation</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <!-- MacJudeのビルドに必要 -->
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>ui</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <!-- Implementation-Version: 1.3.2ea
+                Specification-Title: JavaMail(TM) API Design Specification
+                Specification-Version: 1.3
+                Extension-Name: javax.mail -->
+            <artifactId>mail</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <!-- Bundle-Name: Apache Felix Framework
+                Bundle-SymbolicName: org.apache.felix.framework
+                Bundle-Vendor: The Apache Software Foundation
+                Bundle-Version: 4.0.3 -->
+            <artifactId>org.apache.felix.framework</artifactId>
+            <version>7.0.5</version> 
+        </dependency>
+        <dependency>
+            <groupId>org.apache.axis</groupId>
+            <artifactId>axis-ant</artifactId>
+            <version>1.4</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <!-- EXCEL出力 -->
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+            <optional>true</optional>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-collections4</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>proguard</artifactId>
+            <version>1.1</version>
+            <optional>true</optional>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.xml</groupId>
+            <!-- axis 1.1
+                collaborlation
+                Name: javax/xml/rpc
+                Specification-Title: JAX-RPC
+                Specification-Version: 1.1 -->
+            <artifactId>jaxrpc</artifactId>
+            <version>1.1</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <!-- collaborlation LicenceなどがBase64クラスに依存★要改善 -->
+            <groupId>org.apache.axis</groupId>
+            <artifactId>axis</artifactId>
+            <version>1.4</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <!-- axis 1.1
+                collaborlation
+                Name: javax/xml/soap
+                Specification-Title: SAAJ
+                Specification-Version: 1.1
+                 -->
+            <artifactId>saaj</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <!-- HTML出力のため（リフレクションで利用）
+                http://astah.change-vision.com/ja/manual/487-html-rtf-export.html
+                J2SE6.0の lib/tools.jar -->
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>tools</artifactId>
+            <!-- 本来のバージョンは 1.4.2_09 と思われる -->
+            <version>1.1</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <!-- Jakarta Commons CLI 1.1
+                API for processing command line interfaces -->
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.5.0</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <!-- XMI reading and collaboration.(now we can not use ver 1.6). -->
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+            <version>1.5</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-beanutils</groupId>
+                    <artifactId>commons-beanutils</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-collections</groupId>
+                    <artifactId>commons-collections</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <!-- Extension-Name: org.apache.commons.beanutils
+                Specification-Title: Jakarta Commons Beanutils
+                Specification-Version: 1.6
+                Implementation-Title: org.apache.commons.beanutils
+                Implementation-Version: 1.6 -->
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <!-- Extension-Name: org.apache.commons.collections
+                Specification-Version: 1.0
+                Implementation-Version: 2.1 -->
+            <artifactId>commons-collections</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-discovery</groupId>
+            <artifactId>commons-discovery</artifactId>
+            <version>0.2</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.birt.runtime.3_7_1</groupId>
+            <artifactId>org.apache.xerces</artifactId>
+            <version>2.9.0</version> 
+        </dependency> 
+
+        <dependency> 
+            <!-- Cut dependency to crimson to try to fix Tomcat vertion problem. -->
+            <groupId>xerces</groupId> 
+            <artifactId>xercesImpl</artifactId>
+            <version>2.12.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>wsdl4j</groupId>
+            <artifactId>wsdl4j</artifactId>
+            <version>1.6.3</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <!-- RTF出力 -->
+            <artifactId>itext-1.3.3</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <!-- Implementation-Title: Proxy-Vole
+                Implementation-Version: 20150618 -->
+            <artifactId>proxy-vole</artifactId>
+            <version>20131209-patch</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.5</version>
+        </dependency>
+
+        <!-- IE通信のため -->
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <!-- astah*独自のwindows通信IFをJNAで記載したもの
+                see mail -> [astah-dev:80]
+                mavan project
+                svn+ssh://dev.change-vision.com/home/svnreps/sandbox/branches/platform-connectors
+                Build by Asakawa -->
+            <artifactId>platform-connectors</artifactId>
+            <version>1.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>3.2.7</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <!-- JNA 3.2.7
+                https://jna.dev.java.net/
+                https://jna.dev.java.net/servlets/ProjectDocumentList?folderID=12329&expandFolder=12329&folderID=0 -->
+            <artifactId>platform</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- OOXML Copy のため -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>ooxml-schemas</artifactId>
+            <version>1.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.xmlbeans</groupId>
+                    <artifactId>xmlbeans</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
+            <version>5.1.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.poi</groupId>
+                    <artifactId>poi-ooxml-schemas</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.github.virtuald</groupId>
+                    <artifactId>curvesapi</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+            <version>3.16</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.xmlbeans</groupId>
+                    <artifactId>xmlbeans</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.github.virtuald</groupId>
+            <artifactId>curvesapi</artifactId>
+            <version>1.07</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.rholder</groupId>
+            <artifactId>guava-retrying</artifactId>
+            <version>2.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.errorprone</groupId>
+                    <artifactId>error_prone_annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.j2objc</groupId>
+                    <artifactId>j2objc-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.checkerframework</groupId>
+                    <artifactId>checker-compat-qual</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>animal-sniffer-annotations</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.errorprone</groupId>
+            <artifactId>error_prone_annotations</artifactId>
+            <version>2.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.j2objc</groupId>
+            <artifactId>j2objc-annotations</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.checkerframework</groupId>
+            <artifactId>checker-compat-qual</artifactId>
+            <version>2.5.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>animal-sniffer-annotations</artifactId>
+            <version>1.22</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Batik SVG Toolkit
+            SVG出力
+            画像プレゼンテーション（SVG） -->
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-codec</artifactId>
+            <version>1.14</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Auto Layout -->
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>astah-layout-o</artifactId>
+            <version>1.3.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yworks.yfiles</groupId>
+            <artifactId>yfiles-for-java-swing-o</artifactId>
+            <version>3.3.0.1</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Central Repository Runtime: (compile scope) -->
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf-intellij-themes</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <!-- 以下、テストスコープ -->
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>pdf-transcoder</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>swexpl</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>fest-assert-1.2</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>jcip-annotations-1.0</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>fest-util-1.1.2</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>MRJToolkitStubs-1.0</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>fest-reflect-1.2</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-swing</artifactId>
+            <version>1.2.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>debug-1.0</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.easytesting</groupId>
+            <artifactId>fest-swing-junit-4.5</artifactId>
+            <version>1.2.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!--
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>mockito-all-1.8.4</artifactId>
+            <version>1.0</version>
+            <scope>test</scope>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.change_vision.astah</groupId>
+            <artifactId>test.util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mockito</groupId>
+                    <artifactId>mockito-all</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
